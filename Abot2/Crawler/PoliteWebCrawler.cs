@@ -29,6 +29,8 @@ namespace Abot2.Crawler
         protected IRobotsDotTextFinder _robotsDotTextFinder;
         protected IRobotsDotText _robotsDotText;
 
+        public int PageCrawlCompletedAsync { get; set; }
+
         #region Constructors
 
         public PoliteWebCrawler()
@@ -114,11 +116,11 @@ namespace Abot2.Crawler
             var allPathsBelowRootAllowedByRobots = false;
             if (_robotsDotText != null && pageToCrawl.IsRoot && allowedByRobots)
             {
-                var anyPathOffRoot = pageToCrawl.Uri.AbsoluteUri.EndsWith("/") ? pageToCrawl.Uri.AbsoluteUri + "aaaaa": pageToCrawl.Uri.AbsoluteUri + "/aaaaa";
+                var anyPathOffRoot = pageToCrawl.Uri.AbsoluteUri.EndsWith("/") ? pageToCrawl.Uri.AbsoluteUri + "aaaaa" : pageToCrawl.Uri.AbsoluteUri + "/aaaaa";
                 allPathsBelowRootAllowedByRobots = _robotsDotText.IsUrlAllowed(anyPathOffRoot, _crawlContext.CrawlConfiguration.RobotsDotTextUserAgentString);
             }
 
-            if (_crawlContext.CrawlConfiguration.IsIgnoreRobotsDotTextIfRootDisallowedEnabled && pageToCrawl.IsRoot)    
+            if (_crawlContext.CrawlConfiguration.IsIgnoreRobotsDotTextIfRootDisallowedEnabled && pageToCrawl.IsRoot)
             {
                 if (!allowedByRobots)
                 {
